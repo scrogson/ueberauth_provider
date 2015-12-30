@@ -2,7 +2,7 @@ defmodule UeberauthProvider.Repo.Migrations.CreateProviderTables do
   use Ecto.Migration
 
   def change do
-    create table(:oauth_applications) do
+    create table(:oauth_clients) do
       add :name, :string, null: false
       add :uid, :string, null: false
       add :secret, :string, null: false
@@ -12,11 +12,11 @@ defmodule UeberauthProvider.Repo.Migrations.CreateProviderTables do
       timestamps
     end
 
-    create unique_index(:oauth_applications, [:uid])
+    create unique_index(:oauth_clients, [:uid])
 
     create table(:oauth_access_grants) do
       add :resource_owner_id, :integer, null: false
-      add :application_id, references(:oauth_applications)
+      add :client_id, references(:oauth_clients)
       add :token, :string, null: false
       add :expires_in, :integer, null: false
       add :redirect_uri, :text, null: false
@@ -29,7 +29,7 @@ defmodule UeberauthProvider.Repo.Migrations.CreateProviderTables do
 
     create table(:oauth_access_tokens) do
       add :resource_owner_id, :integer
-      add :application_id, references(:oauth_applications)
+      add :client_id, references(:oauth_clients)
       add :token, :text, null: false
       add :refresh_token, :text
       add :expires_in, :integer, null: false
