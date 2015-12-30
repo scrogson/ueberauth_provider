@@ -4,8 +4,8 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Uid</th>
-      <th>Secret</th>
+      <th>Client ID</th>
+      <th>Client Secret</th>
       <th>Redirect uri</th>
       <th>Scopes</th>
 

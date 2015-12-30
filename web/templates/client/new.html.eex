@@ -1,4 +1,4 @@
-<h2>New client</h2>
+<h2>Register client</h2>
 
 <%= render "form.html", changeset: @changeset,
                         action: client_path(@conn, :create) %>

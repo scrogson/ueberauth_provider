@@ -5,6 +5,17 @@
     </div>
   <% end %>
 
+  <div>
+    <%= label f, :type do %>
+      <%= radio_button f, :type, "public" %>
+      Public
+    <% end %>
+    <%= label f, :type do %>
+      <%= radio_button f, :type, "confidential" %>
+      Confidential
+    <% end %>
+  </div>
+
   <div class="form-group">
     <%= label f, :name, class: "control-label" %>
     <%= text_input f, :name, class: "form-control" %>
@@ -12,27 +23,9 @@
   </div>
 
   <div class="form-group">
-    <%= label f, :uid, class: "control-label" %>
-    <%= text_input f, :uid, class: "form-control" %>
-    <%= error_tag f, :uid %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, :secret, class: "control-label" %>
-    <%= text_input f, :secret, class: "form-control" %>
-    <%= error_tag f, :secret %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, :redirect_uri, class: "control-label" %>
-    <%= text_input f, :redirect_uri, class: "form-control" %>
+    <%= label f, :redirect_uri, "Redirect URIs", class: "control-label" %>
+    <%= textarea f, :redirect_uri, class: "form-control" %>
     <%= error_tag f, :redirect_uri %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, :scopes, class: "control-label" %>
-    <%= text_input f, :scopes, class: "form-control" %>
-    <%= error_tag f, :scopes %>
   </div>
 
   <div class="form-group">
