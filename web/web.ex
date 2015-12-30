@@ -52,6 +52,7 @@ defmodule UeberauthProvider.Web do
       import UeberauthProvider.Router.Helpers
       import UeberauthProvider.ErrorHelpers
       import UeberauthProvider.Gettext
+      import UeberauthProvider.ViewHelpers
     end
   end
 

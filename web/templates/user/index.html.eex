@@ -1,0 +1,11 @@
+<%= if length(@users) > 0 do %>
+<ul>
+  <%= for user <- @users do %>
+    <li><%= user.email %>
+  <% end %>
+</ul>
+<% else %>
+  <p>No users found</p>
+<% end %>
+<%= link "Create user", to: user_path(@conn, :new) %>
+
