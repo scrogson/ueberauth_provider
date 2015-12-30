@@ -24,6 +24,7 @@ defmodule UeberauthProvider.Router do
     delete "/logout", SessionController, :delete, as: :logout
 
     resources "/users", UserController
+    resources "/clients", ClientController
   end
 
   # Other scopes may use custom stacks.

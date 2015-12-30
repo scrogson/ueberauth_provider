@@ -1,0 +1,33 @@
+<h2>Show client</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @client.name %>
+  </li>
+
+  <li>
+    <strong>Uid:</strong>
+    <%= @client.uid %>
+  </li>
+
+  <li>
+    <strong>Secret:</strong>
+    <%= @client.secret %>
+  </li>
+
+  <li>
+    <strong>Redirect uri:</strong>
+    <%= @client.redirect_uri %>
+  </li>
+
+  <li>
+    <strong>Scopes:</strong>
+    <%= @client.scopes %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: client_path(@conn, :edit, @client) %>
+<%= link "Back", to: client_path(@conn, :index) %>
