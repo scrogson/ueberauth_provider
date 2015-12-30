@@ -6,8 +6,8 @@ defmodule UeberauthProvider.Repo.Migrations.CreateProviderTables do
       add :name, :string, null: false
       add :uid, :string, null: false
       add :secret, :string, null: false
-      add :redirect_uri, :text, null: false
-      add :scopes, :string, null: false, default: ""
+      add :redirect_uri, :text, null: false # \n separated list of redirect uris
+      add :scopes, :text, null: false, default: ""
 
       timestamps
     end
