@@ -36,6 +36,7 @@ defmodule UeberauthProvider.Web do
 
       import UeberauthProvider.Router.Helpers
       import UeberauthProvider.Gettext
+      import UeberauthProvider.ControllerHelpers
     end
   end
 

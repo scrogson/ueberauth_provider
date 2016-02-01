@@ -3,10 +3,13 @@ defmodule UeberauthProvider.ClientController do
 
   alias UeberauthProvider.Client
 
+  plug UeberauthProvider.EnsureCurrentUser
   plug :scrub_params, "client" when action in [:create, :update]
 
   def index(conn, _params) do
-    clients = Repo.all(Client)
+    user = current_user(conn)
+    user_id = user.id
+    clients = Repo.all(Ecto.assoc(user, :oauth_clients))
     render(conn, "index.html", clients: clients)
   end
 
@@ -16,7 +19,9 @@ defmodule UeberauthProvider.ClientController do
   end
 
   def create(conn, %{"client" => client_params}) do
-    changeset = Client.changeset(%Client{}, client_params)
+    user = current_user(conn)
+    client = Ecto.build_assoc(user, :oauth_clients)
+    changeset = Client.changeset(client, client_params)
 
     case Repo.insert(changeset) do
       {:ok, _client} ->
@@ -26,6 +31,13 @@ defmodule UeberauthProvider.ClientController do
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
+  end
+
+  def create(conn, _) do
+    conn
+    |> put_status(400)
+    |> put_flash(:error, "Bad request")
+    |> render("new.html", changeset: Client.changeset(%Client{}))
   end
 
   def show(conn, %{"id" => id}) do
@@ -50,6 +62,24 @@ defmodule UeberauthProvider.ClientController do
         |> redirect(to: client_path(conn, :show, client))
       {:error, changeset} ->
         render(conn, "edit.html", client: client, changeset: changeset)
+    end
+  end
+
+  def regenerate_secret(conn, %{"client_id" => id}) do
+    client = current_user(conn)
+    |> Ecto.assoc(:oauth_clients)
+    |> Repo.get_by(id: id)
+
+    cs = Client.regenerate_secret_changeset(client)
+    if cs.valid? do
+      client = Repo.update!(cs)
+      conn
+      |> put_flash(:info, "Secret updated")
+      |> redirect(to: client_path(conn, :show, client.id))
+    else
+      conn
+      |> put_flash(:error, "Could not regenerate secret")
+      |> redirect(to: client_path(conn, :show, client.id))
     end
   end
 

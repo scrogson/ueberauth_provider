@@ -3,4 +3,8 @@
 <%= render "form.html", changeset: @changeset,
                         action: client_path(@conn, :update, @client) %>
 
+<%= link "Regenerate secret",
+          to: client_regenerate_secret_path(@conn, :regenerate_secret, @client.id),
+          method: :patch,
+          class: "btn btn-primary" %>
 <%= link "Back", to: client_path(@conn, :index) %>

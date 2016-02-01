@@ -13,16 +13,31 @@ defmodule UeberauthProvider.Client do
     field :redirect_uri, :string
     field :scopes, :string, default: ""
 
+    belongs_to :user, UeberauthProvider.User
+
     timestamps
   end
 
   def changeset(model, params \\ :empty) do
     model
-    |> cast(params, ~w(name redirect_uri scopes), ~w(type))
+    |> cast(params, ~w(name redirect_uri scopes user_id), ~w(type))
     |> maybe_generate_uid()
     |> maybe_generate_secret()
     |> validate_change(:redirect_uri, &validate_redirect_uris/2)
     |> validate_inclusion(:type, @allowed_client_types)
+  end
+
+  def update_changeset(model, params \\ :empty) do
+    model
+    |> cast(params, ~w(), ~w(redirect_uri scopes name type))
+    |> validate_change(:redirect_uri, &validate_redirect_uris/2)
+    |> validate_inclusion(:type, @allowed_client_types)
+  end
+
+  def regenerate_secret_changeset(model) do
+    model
+    |> cast(%{}, ~w(), ~w())
+    |> generate_secret()
   end
 
   defp maybe_generate_uid(changeset) do
