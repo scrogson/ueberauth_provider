@@ -24,6 +24,9 @@ defmodule UeberauthProvider.Router do
     delete "/logout", SessionController, :delete, as: :logout
 
     resources "/users", UserController
+    resources "/clients", ClientController do
+      patch "/regenerate-secret", ClientController, :regenerate_secret, as: :regenerate_secret
+    end
   end
 
   # Other scopes may use custom stacks.

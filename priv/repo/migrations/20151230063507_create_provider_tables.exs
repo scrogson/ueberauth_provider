@@ -4,6 +4,7 @@ defmodule UeberauthProvider.Repo.Migrations.CreateProviderTables do
   def change do
     create table(:oauth_clients) do
       add :name, :string, null: false
+      add :type, :string, null: false
       add :uid, :string, null: false
       add :secret, :string, null: false
       add :redirect_uri, :text, null: false # \n separated list of redirect uris
